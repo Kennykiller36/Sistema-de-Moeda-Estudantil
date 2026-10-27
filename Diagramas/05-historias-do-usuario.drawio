@@ -1,57 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="app.diagrams.net" version="22.1.0" type="device">
   <diagram id="HistoriasDoUsuario" name="HistoriasDoUsuario">
-    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="900" math="0" shadow="0">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1360" pageHeight="1240" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
         <mxCell id="title_us" value="Histórias do Usuário — Sistema de Moeda Estudantil (Lab03S01)" style="text;html=1;fontSize=18;fontStyle=1;align=left;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="40" y="20" width="900" height="30" as="geometry"/>
+          <mxGeometry x="30" y="16" width="900" height="30" as="geometry"/>
         </mxCell>
         <mxCell id="col_a" value="Como Aluno" style="swimlane;startSize=36;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;html=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="70" width="370" height="660" as="geometry"/>
+          <mxGeometry x="30" y="60" width="410" height="1040" as="geometry"/>
         </mxCell>
         <mxCell id="col_p" value="Como Professor" style="swimlane;startSize=36;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=14;html=1;" vertex="1" parent="1">
-          <mxGeometry x="430" y="70" width="370" height="660" as="geometry"/>
+          <mxGeometry x="460" y="60" width="410" height="1040" as="geometry"/>
         </mxCell>
         <mxCell id="col_e" value="Como Empresa Parceira" style="swimlane;startSize=36;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=14;html=1;" vertex="1" parent="1">
-          <mxGeometry x="820" y="70" width="370" height="660" as="geometry"/>
+          <mxGeometry x="890" y="60" width="410" height="1040" as="geometry"/>
         </mxCell>
-        <mxCell id="s1" value="HU-01 Cadastro&#xa;Como aluno, quero me cadastrar com nome, e-mail, CPF, RG, endereço, instituição e curso, para participar do sistema de mérito." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_a">
-          <mxGeometry x="20" y="50" width="330" height="110" as="geometry"/>
+        <mxCell id="s1" value="HU-01 Cadastro&#xa;Como aluno, quero me cadastrar com nome, e-mail, CPF, RG, endereço, instituição e curso, para participar do sistema de mérito.&#xa;&#xa;Critérios de aceitação:&#xa;• A instituição é uma das pré-cadastradas.&#xa;• Nome, e-mail, CPF, RG, endereço e curso são obrigatórios.&#xa;• O cadastro cria login e senha." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_a">
+          <mxGeometry x="16" y="50" width="378" height="175" as="geometry"/>
         </mxCell>
-        <mxCell id="s2" value="HU-02 Login&#xa;Como aluno, quero autenticar com login e senha, para acessar minha conta com segurança." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_a">
-          <mxGeometry x="20" y="175" width="330" height="80" as="geometry"/>
+        <mxCell id="s2" value="HU-02 Login&#xa;Como aluno, quero autenticar com login e senha, para acessar minha conta.&#xa;&#xa;Critérios de aceitação:&#xa;• Extrato e resgate só abrem com autenticação válida." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_a">
+          <mxGeometry x="16" y="240" width="378" height="130" as="geometry"/>
         </mxCell>
-        <mxCell id="s3" value="HU-03 Extrato&#xa;Como aluno, quero consultar meu saldo e as transações (recebimentos e trocas), para acompanhar minhas moedas." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_a">
-          <mxGeometry x="20" y="270" width="330" height="100" as="geometry"/>
+        <mxCell id="s3" value="HU-03 Extrato&#xa;Como aluno, quero consultar meu saldo e as transações de recebimento e de troca, para acompanhar minhas moedas.&#xa;&#xa;Critérios de aceitação:&#xa;• Exibe o saldo atual.&#xa;• Lista recebimentos e resgates." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_a">
+          <mxGeometry x="16" y="385" width="378" height="155" as="geometry"/>
         </mxCell>
-        <mxCell id="s4" value="HU-04 Resgate&#xa;Como aluno, quero trocar moedas por uma vantagem e receber cupom por e-mail, para usufruir do benefício." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_a">
-          <mxGeometry x="20" y="385" width="330" height="100" as="geometry"/>
+        <mxCell id="s4" value="HU-04 Resgate&#xa;Como aluno, quero trocar moedas por uma vantagem, para usar o benefício na empresa parceira.&#xa;&#xa;Critérios de aceitação:&#xa;• Só conclui se o saldo for suficiente para o custo.&#xa;• O custo é debitado do saldo.&#xa;• O sistema gera um código único de cupom.&#xa;• O mesmo código vai por e-mail ao aluno e à empresa." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_a">
+          <mxGeometry x="16" y="555" width="378" height="200" as="geometry"/>
         </mxCell>
-        <mxCell id="s5" value="HU-05 Notificação&#xa;Como aluno, quero ser notificado por e-mail ao receber moedas, para saber quando fui reconhecido." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_a">
-          <mxGeometry x="20" y="500" width="330" height="90" as="geometry"/>
+        <mxCell id="s5" value="HU-05 Notificação&#xa;Como aluno, quero ser notificado por e-mail ao receber moedas, para saber que fui reconhecido.&#xa;&#xa;Critérios de aceitação:&#xa;• O e-mail sai depois do envio do professor.&#xa;• Informa a quantidade e o motivo." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_a">
+          <mxGeometry x="16" y="770" width="378" height="160" as="geometry"/>
         </mxCell>
-        <mxCell id="s6" value="HU-06 Login professor&#xa;Como professor, quero autenticar com login e senha, para acessar o sistema." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_p">
-          <mxGeometry x="20" y="50" width="330" height="80" as="geometry"/>
+        <mxCell id="s6" value="HU-06 Login&#xa;Como professor, quero autenticar com login e senha, para acessar o sistema.&#xa;&#xa;Critérios de aceitação:&#xa;• Envio de moedas e extrato exigem autenticação.&#xa;• O professor já vem pré-cadastrado pela instituição." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_p">
+          <mxGeometry x="16" y="50" width="378" height="160" as="geometry"/>
         </mxCell>
-        <mxCell id="s7" value="HU-07 Enviar moedas&#xa;Como professor, quero enviar moedas a um aluno (saldo suficiente + motivo obrigatório), para reconhecer mérito." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_p">
-          <mxGeometry x="20" y="145" width="330" height="110" as="geometry"/>
+        <mxCell id="s7" value="HU-07 Enviar moedas&#xa;Como professor, quero enviar moedas a um aluno informando o motivo, para reconhecer mérito.&#xa;&#xa;Critérios de aceitação:&#xa;• O motivo é obrigatório.&#xa;• O envio só conclui com saldo suficiente.&#xa;• O valor sai do professor e entra no aluno.&#xa;• A transação aparece no extrato dos dois." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_p">
+          <mxGeometry x="16" y="225" width="378" height="200" as="geometry"/>
         </mxCell>
-        <mxCell id="s8" value="HU-08 Extrato professor&#xa;Como professor, quero consultar meu saldo e os envios realizados, para controlar a distribuição." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_p">
-          <mxGeometry x="20" y="275" width="330" height="100" as="geometry"/>
+        <mxCell id="s8" value="HU-08 Extrato&#xa;Como professor, quero consultar meu saldo e os envios realizados, para controlar a distribuição.&#xa;&#xa;Critérios de aceitação:&#xa;• Exibe o saldo restante.&#xa;• Lista aluno, quantidade, motivo e data de cada envio." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_p">
+          <mxGeometry x="16" y="440" width="378" height="165" as="geometry"/>
         </mxCell>
-        <mxCell id="s9" value="HU-09 Crédito semestral&#xa;Como professor, quero receber 1.000 moedas acumuláveis a cada semestre, para continuar reconhecendo alunos." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_p">
-          <mxGeometry x="20" y="395" width="330" height="110" as="geometry"/>
+        <mxCell id="s9" value="HU-09 Crédito semestral&#xa;Como professor, quero receber 1.000 moedas a cada semestre, para continuar reconhecendo alunos.&#xa;&#xa;Critérios de aceitação:&#xa;• As 1.000 moedas são somadas ao saldo corrente.&#xa;• O que não foi distribuído permanece e acumula.&#xa;• Há um crédito por professor em cada semestre." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_p">
+          <mxGeometry x="16" y="620" width="378" height="190" as="geometry"/>
         </mxCell>
-        <mxCell id="s10" value="HU-10 Cadastro empresa&#xa;Como empresa parceira, quero me cadastrar com login/senha, para oferecer vantagens." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_e">
-          <mxGeometry x="20" y="50" width="330" height="90" as="geometry"/>
+        <mxCell id="s10" value="HU-10 Cadastro&#xa;Como empresa parceira, quero me cadastrar com login e senha, para oferecer vantagens.&#xa;&#xa;Critérios de aceitação:&#xa;• Login e senha são obrigatórios.&#xa;• O acesso às funções da empresa exige autenticação." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_e">
+          <mxGeometry x="16" y="50" width="378" height="155" as="geometry"/>
         </mxCell>
-        <mxCell id="s11" value="HU-11 Cadastrar vantagem&#xa;Como empresa, quero cadastrar vantagens com descrição, foto e custo em moedas, para atrair alunos." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_e">
-          <mxGeometry x="20" y="160" width="330" height="110" as="geometry"/>
+        <mxCell id="s11" value="HU-11 Cadastrar vantagem&#xa;Como empresa, quero cadastrar vantagens com descrição, foto e custo em moedas, para que os alunos resgatem.&#xa;&#xa;Critérios de aceitação:&#xa;• Descrição, foto e custo são obrigatórios.&#xa;• A vantagem fica vinculada à empresa autenticada." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_e">
+          <mxGeometry x="16" y="220" width="378" height="170" as="geometry"/>
         </mxCell>
-        <mxCell id="s12" value="HU-12 Conferência&#xa;Como empresa, quero receber e-mail com código ao resgate, para conferir a troca presencial." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_e">
-          <mxGeometry x="20" y="290" width="330" height="110" as="geometry"/>
+        <mxCell id="s12" value="HU-12 Conferir resgate&#xa;Como empresa, quero validar o código do resgate, para conferir a troca presencial.&#xa;&#xa;Critérios de aceitação:&#xa;• O e-mail traz o mesmo código enviado ao aluno.&#xa;• A conferência localiza o cupom por esse código.&#xa;• A empresa marca o cupom como utilizado.&#xa;• Código já utilizado não é aceito de novo." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fillColor=#ffffff;strokeColor=#666666;fontSize=11;shadow=1;" vertex="1" parent="col_e">
+          <mxGeometry x="16" y="405" width="378" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="note_us" value="Instituições e professores são pré-cadastrados. Depois do cadastro, aluno, professor e empresa só usam o sistema autenticados.&#xa;Regras cobertas nos critérios: saldo suficiente, motivo obrigatório, crédito semestral acumulável e código único do cupom na conferência." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1120" width="1270" height="70" as="geometry"/>
         </mxCell>
       </root>
     </mxGraphModel>
