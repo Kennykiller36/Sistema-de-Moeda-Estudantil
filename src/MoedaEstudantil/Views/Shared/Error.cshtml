@@ -1,0 +1,16 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Erro";
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <h1>Não foi possível concluir a operação</h1>
+        <p>Tente de novo. Se o problema continuar, avise o grupo com o identificador abaixo.</p>
+    </div>
+</section>
+
+@if (Model.ShowRequestId)
+{
+    <p>Identificador: <code>@Model.RequestId</code></p>
+}

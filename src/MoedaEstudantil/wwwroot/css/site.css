@@ -1,0 +1,241 @@
+:root {
+    --papel: #f3eee4;
+    --cartao: #fffaf3;
+    --tinta: #1d2923;
+    --suave: #5c675f;
+    --verde: #1c4536;
+    --verde-escuro: #132e24;
+    --linha: #ddd3c3;
+    --ouro: #8a6428;
+    --erro: #8d2f2f;
+    --erro-fundo: #f8ecec;
+    --ok: #1d6844;
+    --ok-fundo: #e7f3ec;
+    --sombra: 0 1px 0 rgba(28, 40, 32, 0.04);
+    color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: "Segoe UI", Candara, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+h1, h2, .marca strong {
+    font-family: Palatino, "Palatino Linotype", Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+h1 { font-size: 2rem; line-height: 1.15; margin: 0 0 0.4rem; }
+h2 { font-size: 1.25rem; margin: 0 0 0.4rem; }
+p { margin: 0; }
+
+a { color: var(--verde); }
+a:hover { color: var(--ouro); }
+
+.topo {
+    background: var(--verde-escuro);
+    color: #f6f1e7;
+}
+
+.topo-interno, .conteudo, .rodape {
+    width: min(1080px, calc(100% - 2rem));
+    margin-inline: auto;
+}
+
+.topo-interno {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 0.9rem 0;
+    flex-wrap: wrap;
+}
+
+.marca {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+.marca small {
+    display: block;
+    color: #d9c7a2;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.selo {
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 1px solid #d9c7a2;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #f0d7a2;
+    font-family: Palatino, Georgia, serif;
+    font-size: 1.2rem;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.9rem;
+    align-items: center;
+}
+
+.menu a, .sair button {
+    color: #f6f1e7;
+    text-decoration: none;
+    background: none;
+    border: 0;
+    font: inherit;
+    padding: 0.2rem 0;
+    cursor: pointer;
+}
+
+.menu a:hover, .sair button:hover { color: #f0d7a2; }
+.sair { margin: 0; }
+
+.conteudo { padding: 2rem 0 3rem; }
+
+.rodape {
+    color: var(--suave);
+    font-size: 0.9rem;
+    padding-bottom: 2rem;
+}
+
+.abertura { max-width: 40rem; margin-bottom: 1.8rem; }
+.olho {
+    margin: 0 0 0.4rem;
+    color: var(--ouro);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.resumo { color: var(--suave); margin-top: 0.6rem; }
+
+.cartoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.cartao, .painel, .formulario, .ficha {
+    background: var(--cartao);
+    border: 1px solid var(--linha);
+    box-shadow: var(--sombra);
+}
+
+.cartao, .painel { padding: 1.2rem 1.25rem 1.3rem; }
+.cartao p, .painel p { color: var(--suave); margin-bottom: 1rem; }
+
+.cabeca-pagina {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: end;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.cabeca-pagina p { color: var(--suave); }
+
+.botao, button.botao {
+    display: inline-block;
+    background: var(--verde);
+    color: #f7f3ea;
+    text-decoration: none;
+    border: 1px solid var(--verde);
+    border-radius: 4px;
+    padding: 0.55rem 0.9rem;
+    font: inherit;
+    cursor: pointer;
+}
+
+.botao:hover { background: var(--verde-escuro); color: #fff; }
+.botao-secundario { background: transparent; color: var(--verde); }
+.botao-secundario:hover { background: #efe8da; color: var(--verde-escuro); }
+.botao-perigo { background: var(--erro); border-color: var(--erro); color: #fff; }
+.botao-perigo:hover { background: #6f2222; color: #fff; }
+
+.acoes { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+
+.formulario { padding: 1.25rem; }
+.formulario-estreito { max-width: 28rem; }
+.grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem 1rem;
+}
+.campo { display: flex; flex-direction: column; gap: 0.3rem; }
+.campo-largo { grid-column: 1 / -1; }
+.campo label { font-size: 0.92rem; }
+
+input, select {
+    width: 100%;
+    border: 1px solid #cfc5b4;
+    background: #fff;
+    color: var(--tinta);
+    border-radius: 4px;
+    padding: 0.55rem 0.65rem;
+    font: inherit;
+}
+
+input:focus, select:focus {
+    outline: 2px solid #c8ad72;
+    border-color: var(--ouro);
+}
+
+.formulario .acoes { margin-top: 1.1rem; }
+
+.aviso { padding: 0.7rem 0.85rem; border-radius: 4px; margin: 0 0 1rem; }
+.aviso-ok { background: var(--ok-fundo); color: var(--ok); }
+.aviso-erro, .validation-summary-errors, .field-validation-error {
+    color: var(--erro);
+}
+.validation-summary-errors {
+    background: var(--erro-fundo);
+    padding: 0.7rem 0.85rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+.validation-summary-valid, .field-validation-valid { display: none; }
+.input-validation-error { border-color: var(--erro); }
+.field-validation-error { font-size: 0.88rem; }
+
+.tabela-rolagem { overflow-x: auto; border: 1px solid var(--linha); background: var(--cartao); }
+table { width: 100%; border-collapse: collapse; min-width: 640px; }
+th, td { text-align: left; padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--linha); vertical-align: top; }
+th { font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--suave); font-weight: 600; }
+tr:last-child td { border-bottom: 0; }
+tr:hover td { background: #f7f1e6; }
+.acoes-tabela { white-space: nowrap; }
+.acoes-tabela a { margin-right: 0.7rem; }
+
+.ficha {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    margin: 0;
+}
+.ficha div { padding: 0.9rem 1rem; border-bottom: 1px solid var(--linha); }
+.ficha dt { color: var(--suave); font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.ficha dd { margin: 0.2rem 0 0; }
+
+.vazio, .volta { color: var(--suave); }
+.volta { margin-top: 1rem; }
+
+@media (max-width: 720px) {
+    .grade { grid-template-columns: 1fr; }
+    h1 { font-size: 1.6rem; }
+}

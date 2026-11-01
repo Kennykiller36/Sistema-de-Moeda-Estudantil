@@ -1,0 +1,50 @@
+@model IReadOnlyList<EmpresaParceira>
+@{
+    ViewData["Title"] = "Empresas";
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <h1>Empresas parceiras</h1>
+        <p>Cadastros gravados no banco. Editar e excluir vale só para o próprio login.</p>
+    </div>
+    <a class="botao" asp-action="Novo">Nova empresa</a>
+</section>
+
+@if (Model.Count == 0)
+{
+    <p class="vazio">Nenhuma empresa cadastrada ainda.</p>
+}
+else
+{
+    <div class="tabela-rolagem">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome fantasia</th>
+                    <th>E-mail</th>
+                    <th>CNPJ</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var empresa in Model)
+            {
+                <tr>
+                    <td>@empresa.NomeFantasia</td>
+                    <td>@empresa.Email</td>
+                    <td>@Documento.FormatarCnpj(empresa.Cnpj)</td>
+                    <td class="acoes-tabela">
+                        <a asp-action="Detalhes" asp-route-id="@empresa.Id">Abrir</a>
+                        @if (SessaoCookie.EhDono(User, empresa.Id))
+                        {
+                            <a asp-action="Editar" asp-route-id="@empresa.Id">Editar</a>
+                            <a asp-action="Excluir" asp-route-id="@empresa.Id">Excluir</a>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

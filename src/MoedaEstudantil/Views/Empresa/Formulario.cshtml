@@ -1,0 +1,62 @@
+@model EmpresaFormulario
+@{
+    var editando = Model.Id is > 0;
+    ViewData["Title"] = editando ? "Editar empresa" : "Cadastrar empresa";
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <h1>@(editando ? "Editar empresa" : "Cadastrar empresa parceira")</h1>
+        <p>@(editando ? "A senha atual permanece se os campos de senha ficarem em branco." : "O e-mail e a senha criados aqui são o login da empresa.")</p>
+    </div>
+</section>
+
+<form class="formulario" method="post" asp-action="@(editando ? "Editar" : "Novo")" asp-route-id="@(editando ? Model.Id : null)">
+    @if (editando)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <div asp-validation-summary="ModelOnly" class="aviso aviso-erro"></div>
+    <div class="grade">
+        <div class="campo">
+            <label asp-for="NomeFantasia"></label>
+            <input asp-for="NomeFantasia" autocomplete="organization" />
+            <span asp-validation-for="NomeFantasia"></span>
+        </div>
+        <div class="campo">
+            <label asp-for="Cnpj"></label>
+            <input asp-for="Cnpj" inputmode="numeric" data-mascara="##.###.###/####-##" autocomplete="off" />
+            <span asp-validation-for="Cnpj"></span>
+        </div>
+        <div class="campo">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" autocomplete="username" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="campo">
+            <label asp-for="Senha"></label>
+            <input asp-for="Senha" autocomplete="new-password" />
+            <span asp-validation-for="Senha"></span>
+        </div>
+        <div class="campo">
+            <label asp-for="ConfirmarSenha"></label>
+            <input asp-for="ConfirmarSenha" autocomplete="new-password" />
+            <span asp-validation-for="ConfirmarSenha"></span>
+        </div>
+    </div>
+    <div class="acoes">
+        <button class="botao" type="submit">@(editando ? "Salvar alterações" : "Cadastrar")</button>
+        @if (editando)
+        {
+            <a class="botao botao-secundario" asp-action="Detalhes" asp-route-id="@Model.Id">Cancelar</a>
+        }
+        else
+        {
+            <a class="botao botao-secundario" asp-controller="Home" asp-action="Index">Cancelar</a>
+        }
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] — Moeda Estudantil</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="topo">
+        <div class="topo-interno">
+            <a class="marca" asp-controller="Home" asp-action="Index">
+                <span class="selo" aria-hidden="true">M</span>
+                <span>
+                    <strong>Moeda Estudantil</strong>
+                    <small>Reconhecimento de mérito</small>
+                </span>
+            </a>
+            <nav class="menu">
+                <a asp-controller="Aluno" asp-action="Novo">Cadastrar aluno</a>
+                <a asp-controller="Empresa" asp-action="Novo">Cadastrar empresa</a>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a asp-controller="Aluno" asp-action="Index">Alunos</a>
+                    <a asp-controller="Empresa" asp-action="Index">Empresas</a>
+                    @if (User.IsInRole("Aluno") && SessaoCookie.Id(User) is long alunoId)
+                    {
+                        <a asp-controller="Aluno" asp-action="Detalhes" asp-route-id="@alunoId">Meu cadastro</a>
+                    }
+                    @if (User.IsInRole("Empresa") && SessaoCookie.Id(User) is long empresaId)
+                    {
+                        <a asp-controller="Empresa" asp-action="Detalhes" asp-route-id="@empresaId">Meu cadastro</a>
+                    }
+                    <form class="sair" asp-controller="Autenticacao" asp-action="Sair" method="post">
+                        <button type="submit">Sair</button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-controller="Autenticacao" asp-action="Entrar">Entrar</a>
+                }
+            </nav>
+        </div>
+    </header>
+    <main class="conteudo">
+        @if (TempData["Mensagem"] is string mensagem)
+        {
+            <p class="aviso aviso-ok" role="status">@mensagem</p>
+        }
+        @if (TempData["MensagemErro"] is string erro)
+        {
+            <p class="aviso aviso-erro" role="alert">@erro</p>
+        }
+        @RenderBody()
+    </main>
+    <footer class="rodape">
+        <p>Sprint 2 — cadastro de aluno e de empresa parceira, com o modelo relacional já persistido.</p>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
