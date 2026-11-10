@@ -182,7 +182,7 @@ a:hover { color: var(--ouro); }
 .campo-largo { grid-column: 1 / -1; }
 .campo label { font-size: 0.92rem; }
 
-input, select {
+input, select, textarea {
     width: 100%;
     border: 1px solid #cfc5b4;
     background: #fff;
@@ -192,7 +192,9 @@ input, select {
     font: inherit;
 }
 
-input:focus, select:focus {
+textarea { resize: vertical; }
+
+input:focus, select:focus, textarea:focus {
     outline: 2px solid #c8ad72;
     border-color: var(--ouro);
 }
@@ -235,7 +237,84 @@ tr:hover td { background: #f7f1e6; }
 .vazio, .volta { color: var(--suave); }
 .volta { margin-top: 1rem; }
 
+.usuario-atual { color: #d9c7a2; font-size: 0.85rem; }
+.aviso-alerta { background: #fbf1dc; color: #6e4d17; }
+.secao { margin-top: 2rem; }
+.secao > h2 { margin-bottom: 0.8rem; }
+.detalhe { display: block; color: var(--suave); font-size: 0.88rem; }
+.numero { text-align: right; white-space: nowrap; }
+.valor-entrada { color: var(--ok); font-weight: 600; }
+.valor-saida { color: var(--erro); font-weight: 600; }
+
+.resumo-saldos { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1.2rem; }
+.saldo {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 10rem;
+    padding: 0.7rem 1rem;
+    background: var(--cartao);
+    border: 1px solid var(--linha);
+    box-shadow: var(--sombra);
+}
+.saldo small { color: var(--suave); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.saldo strong { font-family: Palatino, "Palatino Linotype", Georgia, serif; font-size: 1.8rem; line-height: 1.15; color: var(--verde); }
+.saldo span { color: var(--suave); font-size: 0.85rem; }
+
+.etiqueta {
+    display: inline-block;
+    padding: 0.1rem 0.55rem;
+    border-radius: 999px;
+    background: #ece4d5;
+    color: var(--suave);
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+.etiqueta-ok { background: var(--ok-fundo); color: var(--ok); }
+.etiqueta-alerta { background: #fbf1dc; color: #6e4d17; }
+
+.vitrine { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem; }
+.vantagem { display: flex; flex-direction: column; background: var(--cartao); border: 1px solid var(--linha); box-shadow: var(--sombra); }
+.vantagem img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #e9e1d2; }
+.vantagem-corpo { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; padding: 0.9rem 1rem 1rem; }
+.vantagem-corpo .olho { margin: 0; }
+.vantagem-rodape { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-top: auto; }
+.vantagem-inativa { opacity: 0.6; }
+.custo { font-family: Palatino, "Palatino Linotype", Georgia, serif; font-size: 1.15rem; font-weight: 600; color: var(--ouro); }
+
+.confirmacao { display: grid; grid-template-columns: minmax(200px, 340px) 1fr; gap: 1.2rem; align-items: start; }
+.confirmacao .ficha { margin: 0.8rem 0 1rem; }
+.foto-grande { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--linha); background: #e9e1d2; }
+.foto-atual { max-width: 220px; border: 1px solid var(--linha); }
+.miniatura { width: 72px; height: 54px; object-fit: cover; border: 1px solid var(--linha); display: block; }
+
+.codigo-cupom {
+    margin: 0.4rem 0 0.9rem;
+    padding: 0.9rem 1rem;
+    border: 2px dashed var(--ouro);
+    background: #fffdf8;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 1.8rem;
+    letter-spacing: 0.1em;
+    text-align: center;
+    color: var(--verde-escuro);
+}
+.conferencia { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: end; max-width: 36rem; }
+.conferencia .campo { flex: 1; min-width: 14rem; }
+.conferencia .acoes { margin-top: 0; }
+.conferencia .validation-summary-errors, .conferencia .aviso { flex-basis: 100%; }
+.resultado-cupom { margin-top: 1rem; max-width: 40rem; }
+.resultado-cupom .ficha { margin-bottom: 1rem; }
+
+.notificacoes { display: grid; gap: 0.8rem; max-width: 46rem; }
+.notificacao { background: var(--cartao); border: 1px solid var(--linha); padding: 1rem 1.1rem; }
+.notificacao .meta { color: var(--suave); font-size: 0.85rem; margin-bottom: 0.4rem; }
+.corpo-email { white-space: pre-line; color: var(--tinta); }
+
+.em-linha { display: inline; margin: 0 0.7rem 0 0; }
+button.link { background: none; border: 0; padding: 0; color: var(--verde); font: inherit; text-decoration: underline; cursor: pointer; }
+button.link:hover { color: var(--ouro); }
+
 @media (max-width: 720px) {
-    .grade { grid-template-columns: 1fr; }
+    .grade, .confirmacao { grid-template-columns: 1fr; }
     h1 { font-size: 1.6rem; }
 }

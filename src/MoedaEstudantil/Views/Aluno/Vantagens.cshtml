@@ -1,0 +1,44 @@
+@model VitrineVantagens
+@{
+    ViewData["Title"] = "Vantagens";
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <p class="olho">Vitrine</p>
+        <h1>Vantagens</h1>
+        <p>Troque moedas por produtos e descontos das empresas parceiras. O cupom chega no seu e-mail.</p>
+    </div>
+    <div class="saldo"><small>Seu saldo</small><strong>@Model.Saldo.ToString("N0")</strong><span>moedas</span></div>
+</section>
+
+@if (Model.Vantagens.Count == 0)
+{
+    <p class="vazio">Nenhuma vantagem disponível no momento.</p>
+}
+else
+{
+    <div class="vitrine">
+        @foreach (var vantagem in Model.Vantagens)
+        {
+            <article class="vantagem">
+                <img src="@ArmazenamentoFotosEmDisco.Url(vantagem.Foto)" alt="Foto da vantagem: @vantagem.Descricao" loading="lazy" />
+                <div class="vantagem-corpo">
+                    <p class="olho">@vantagem.Empresa.NomeFantasia</p>
+                    <p>@vantagem.Descricao</p>
+                    <div class="vantagem-rodape">
+                        <span class="custo">@vantagem.CustoMoedas.ToString("N0") moedas</span>
+                        @if (vantagem.CustoMoedas <= Model.Saldo)
+                        {
+                            <a class="botao" asp-action="Resgatar" asp-route-vantagemId="@vantagem.Id">Trocar</a>
+                        }
+                        else
+                        {
+                            <span class="etiqueta">Faltam @((vantagem.CustoMoedas - Model.Saldo).ToString("N0"))</span>
+                        }
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+}

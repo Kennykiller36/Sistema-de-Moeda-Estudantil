@@ -109,6 +109,66 @@ public class LoginFormulario
     public string Senha { get; set; } = string.Empty;
 }
 
+public class EnvioMoedasFormulario
+{
+    [Range(1, long.MaxValue, ErrorMessage = "Selecione o aluno.")]
+    [Display(Name = "Aluno")]
+    public long AlunoId { get; set; }
+
+    [Required(ErrorMessage = "Informe a quantidade de moedas.")]
+    [Range(1, int.MaxValue, ErrorMessage = "Informe uma quantidade de moedas maior que zero.")]
+    [Display(Name = "Quantidade de moedas")]
+    public int? Quantidade { get; set; }
+
+    [Required(ErrorMessage = "Informe o motivo do reconhecimento.")]
+    [StringLength(Dominio.Professor.TamanhoMaximoMotivo, MinimumLength = 5, ErrorMessage = "Descreva o motivo em 5 a 500 caracteres.")]
+    [Display(Name = "Motivo do reconhecimento")]
+    public string Motivo { get; set; } = string.Empty;
+
+    public int Saldo { get; set; }
+    public string Instituicao { get; set; } = string.Empty;
+    public IEnumerable<SelectListItem> Alunos { get; set; } = [];
+}
+
+public class VantagemFormulario
+{
+    public long? Id { get; set; }
+
+    [Required(ErrorMessage = "Descreva a vantagem.")]
+    [StringLength(500, MinimumLength = 5, ErrorMessage = "Descreva a vantagem em 5 a 500 caracteres.")]
+    [Display(Name = "Descrição")]
+    public string Descricao { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Informe o custo em moedas.")]
+    [Range(1, Servicos.VantagemServico.CustoMaximo, ErrorMessage = "O custo deve ficar entre 1 e 100.000 moedas.")]
+    [Display(Name = "Custo em moedas")]
+    public int? CustoMoedas { get; set; }
+
+    [Display(Name = "Foto do produto")]
+    public IFormFile? Foto { get; set; }
+
+    public string? FotoAtual { get; set; }
+}
+
+public class SenhaFormulario
+{
+    [Required(ErrorMessage = "Informe a senha atual.")]
+    [DataType(DataType.Password)]
+    [Display(Name = "Senha atual")]
+    public string SenhaAtual { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Informe a nova senha.")]
+    [StringLength(200, MinimumLength = 6, ErrorMessage = "A senha deve ter pelo menos 6 caracteres.")]
+    [DataType(DataType.Password)]
+    [Display(Name = "Nova senha")]
+    public string NovaSenha { get; set; } = string.Empty;
+
+    [Compare(nameof(NovaSenha), ErrorMessage = "A confirmação não confere com a nova senha.")]
+    [DataType(DataType.Password)]
+    [Display(Name = "Confirmar nova senha")]
+    public string ConfirmarSenha { get; set; } = string.Empty;
+}
+
 internal static class ValidacaoSenha
 {
     public static IEnumerable<ValidationResult> Avaliar(long? id, string? senha, string? confirmacao)

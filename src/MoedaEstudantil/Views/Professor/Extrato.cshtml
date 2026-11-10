@@ -1,0 +1,15 @@
+@model Extrato
+@{
+    ViewData["Title"] = "Extrato";
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <p class="olho">Professor</p>
+        <h1>Extrato</h1>
+        <p>Créditos de 1.000 moedas por semestre (acumulativos) e os envios feitos aos alunos.</p>
+    </div>
+    <a class="botao" asp-action="Enviar">Enviar moedas</a>
+</section>
+
+<partial name="_Extrato" model="Model" />

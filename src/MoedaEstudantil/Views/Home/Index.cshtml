@@ -1,46 +1,69 @@
 ﻿@{
     ViewData["Title"] = "Início";
-    var autenticado = User.Identity?.IsAuthenticated == true;
 }
 
 <section class="abertura">
-    <p class="olho">Laboratório 3 · Sprint 2</p>
+    <p class="olho">Laboratório 3 · Sprint 3</p>
     <h1>Moeda para reconhecer mérito estudantil</h1>
     <p class="resumo">
-        Alunos e empresas parceiras entram por aqui. As instituições de ensino já estão no sistema,
-        e o cadastro cria o login. Envio de moedas, vantagens e extrato ficam para a próxima sprint.
+        Professores distribuem moedas aos alunos pelo bom desempenho. Os alunos trocam as moedas
+        por vantagens das empresas parceiras e recebem um cupom por e-mail para a troca presencial.
     </p>
 </section>
 
-@if (autenticado)
+@if (User.IsInRole(nameof(TipoUsuario.Aluno)))
 {
     <section class="painel">
         <h2>Olá, @User.Identity?.Name</h2>
-        <p>Você está autenticado. Consulte os cadastros ou abra o seu.</p>
+        <p>Veja o saldo e os recebimentos no extrato, ou escolha uma vantagem para trocar.</p>
         <div class="acoes">
-            @if (User.IsInRole("Aluno") && SessaoCookie.Id(User) is long alunoId)
-            {
-                <a class="botao" asp-controller="Aluno" asp-action="Detalhes" asp-route-id="@alunoId">Meu cadastro</a>
-            }
-            @if (User.IsInRole("Empresa") && SessaoCookie.Id(User) is long empresaId)
-            {
-                <a class="botao" asp-controller="Empresa" asp-action="Detalhes" asp-route-id="@empresaId">Meu cadastro</a>
-            }
-            <a class="botao botao-secundario" asp-controller="Aluno" asp-action="Index">Lista de alunos</a>
-            <a class="botao botao-secundario" asp-controller="Empresa" asp-action="Index">Lista de empresas</a>
+            <a class="botao" asp-controller="Aluno" asp-action="Vantagens">Trocar moedas</a>
+            <a class="botao botao-secundario" asp-controller="Aluno" asp-action="Extrato">Extrato</a>
+            <a class="botao botao-secundario" asp-controller="Aluno" asp-action="Notificacoes">Notificações</a>
         </div>
     </section>
 }
-
-<div class="cartoes">
-    <article class="cartao">
-        <h2>Aluno</h2>
-        <p>Nome, e-mail, CPF, RG, endereço, instituição e curso. A instituição é escolhida entre as que já participam.</p>
-        <a class="botao" asp-controller="Aluno" asp-action="Novo">Cadastrar aluno</a>
-    </article>
-    <article class="cartao">
-        <h2>Empresa parceira</h2>
-        <p>Nome fantasia, CNPJ, e-mail e senha. O acesso às funções da empresa passa por esse login.</p>
-        <a class="botao" asp-controller="Empresa" asp-action="Novo">Cadastrar empresa</a>
-    </article>
-</div>
+else if (User.IsInRole(nameof(TipoUsuario.Professor)))
+{
+    <section class="painel">
+        <h2>Olá, @User.Identity?.Name</h2>
+        <p>Você recebe 1.000 moedas por semestre, somadas ao saldo que sobrou. Reconheça um aluno da sua instituição.</p>
+        <div class="acoes">
+            <a class="botao" asp-controller="Professor" asp-action="Enviar">Enviar moedas</a>
+            <a class="botao botao-secundario" asp-controller="Professor" asp-action="Extrato">Extrato</a>
+            <a class="botao botao-secundario" asp-controller="Professor" asp-action="Alunos">Alunos</a>
+        </div>
+    </section>
+}
+else if (User.IsInRole(nameof(TipoUsuario.Empresa)))
+{
+    <section class="painel">
+        <h2>Olá, @User.Identity?.Name</h2>
+        <p>Cadastre vantagens com foto e custo em moedas. Quando um aluno troca, o cupom chega no seu e-mail para conferência.</p>
+        <div class="acoes">
+            <a class="botao" asp-controller="Empresa" asp-action="NovaVantagem">Nova vantagem</a>
+            <a class="botao botao-secundario" asp-controller="Empresa" asp-action="Vantagens">Minhas vantagens</a>
+            <a class="botao botao-secundario" asp-controller="Empresa" asp-action="Cupons">Conferir cupom</a>
+        </div>
+    </section>
+}
+else
+{
+    <div class="cartoes">
+        <article class="cartao">
+            <h2>Aluno</h2>
+            <p>Cadastre-se com a sua instituição de ensino, receba moedas dos professores e troque por vantagens.</p>
+            <a class="botao" asp-controller="Aluno" asp-action="Novo">Cadastrar aluno</a>
+        </article>
+        <article class="cartao">
+            <h2>Professor</h2>
+            <p>O cadastro vem da instituição parceira. Entre com o e-mail institucional e a senha recebida.</p>
+            <a class="botao" asp-controller="Autenticacao" asp-action="Entrar">Entrar</a>
+        </article>
+        <article class="cartao">
+            <h2>Empresa parceira</h2>
+            <p>Cadastre a empresa e as vantagens oferecidas, com descrição, foto e custo em moedas.</p>
+            <a class="botao" asp-controller="Empresa" asp-action="Novo">Cadastrar empresa</a>
+        </article>
+    </div>
+}

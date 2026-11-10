@@ -1,0 +1,31 @@
+@model Cupom
+@{
+    ViewData["Title"] = $"Cupom {Model.Codigo}";
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <p class="olho">Cupom · @Model.Empresa.NomeFantasia</p>
+        <h1>@Model.Vantagem.Descricao</h1>
+        <p>Gerado em @Model.DataGeracao.ToString("dd/MM/yyyy 'às' HH:mm") por @Model.Vantagem.CustoMoedas.ToString("N0") moedas.</p>
+    </div>
+</section>
+
+<div class="confirmacao">
+    <img class="foto-grande" src="@ArmazenamentoFotosEmDisco.Url(Model.Vantagem.Foto)" alt="Foto da vantagem: @Model.Vantagem.Descricao" />
+    <div class="formulario">
+        <p>Apresente este código na troca presencial:</p>
+        <p class="codigo-cupom">@Model.Codigo</p>
+        @if (Model.Utilizado)
+        {
+            <p><span class="etiqueta etiqueta-ok">Utilizado em @Model.DataUtilizacao?.ToString("dd/MM/yyyy 'às' HH:mm")</span></p>
+        }
+        else
+        {
+            <p><span class="etiqueta etiqueta-alerta">Aguardando a troca</span></p>
+        }
+        <p class="detalhe">Uma cópia foi para o seu e-mail, e a empresa recebeu o mesmo código para conferir.</p>
+    </div>
+</div>
+
+<p class="volta"><a asp-action="Extrato">Ver extrato</a> · <a asp-action="Vantagens">Voltar à vitrine</a></p>

@@ -1,0 +1,51 @@
+@model EnvioMoedasFormulario
+@{
+    ViewData["Title"] = "Enviar moedas";
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <p class="olho">Professor · @Model.Instituicao</p>
+        <h1>Enviar moedas</h1>
+        <p>Reconheça um aluno da sua instituição. O motivo é obrigatório e vai no e-mail que o aluno recebe.</p>
+    </div>
+    <div class="saldo"><small>Seu saldo</small><strong>@Model.Saldo.ToString("N0")</strong><span>moedas</span></div>
+</section>
+
+@if (!Model.Alunos.Any())
+{
+    <p class="vazio">Nenhum aluno da sua instituição se cadastrou ainda.</p>
+}
+else
+{
+    <form class="formulario" method="post" asp-action="Enviar" data-envio-unico>
+        <div asp-validation-summary="ModelOnly" class="aviso aviso-erro"></div>
+        <div class="grade">
+            <div class="campo">
+                <label asp-for="AlunoId"></label>
+                <select asp-for="AlunoId" asp-items="Model.Alunos">
+                    <option value="0">Selecione</option>
+                </select>
+                <span asp-validation-for="AlunoId"></span>
+            </div>
+            <div class="campo">
+                <label asp-for="Quantidade"></label>
+                <input asp-for="Quantidade" type="number" min="1" step="1" inputmode="numeric" />
+                <span asp-validation-for="Quantidade"></span>
+            </div>
+            <div class="campo campo-largo">
+                <label asp-for="Motivo"></label>
+                <textarea asp-for="Motivo" rows="4" maxlength="500" placeholder="Ex.: melhor apresentação do projeto final"></textarea>
+                <span asp-validation-for="Motivo"></span>
+            </div>
+        </div>
+        <div class="acoes">
+            <button class="botao" type="submit">Enviar moedas</button>
+            <a class="botao botao-secundario" asp-action="Extrato">Ver extrato</a>
+        </div>
+    </form>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

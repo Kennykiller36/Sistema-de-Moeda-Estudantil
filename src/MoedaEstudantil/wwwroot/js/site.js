@@ -14,4 +14,15 @@
             campo.value = saida;
         });
     });
+
+    document.querySelectorAll("form[data-envio-unico]").forEach(function (formulario) {
+        formulario.addEventListener("submit", function (evento) {
+            setTimeout(function () {
+                if (evento.defaultPrevented) return;
+                formulario.querySelectorAll("button[type=submit]").forEach(function (botao) {
+                    botao.disabled = true;
+                });
+            }, 0);
+        });
+    });
 })();

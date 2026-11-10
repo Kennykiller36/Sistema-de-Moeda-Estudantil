@@ -40,7 +40,7 @@ public class CadastroTestes
         Assert.Equal(0, aluno.Saldo);
         Assert.Equal(TipoUsuario.Aluno, aluno.Tipo);
         Assert.NotEqual("segredo", aluno.Senha);
-        Assert.Equal("ALUNO", LerColuna(fabrica, "SELECT tipo FROM usuario").Single());
+        Assert.Equal("ALUNO", LerColuna(fabrica, $"SELECT tipo FROM usuario WHERE id = {resultado.Id}").Single());
 
         var sessao = await fabrica.Autenticacao.EntrarAsync("Ana@pucminas.br", "segredo");
         Assert.NotNull(sessao);
@@ -89,9 +89,8 @@ public class CadastroTestes
     {
         using var fabrica = new FabricaTeste();
         var criado = await fabrica.Alunos.CadastrarAsync(fabrica.AlunoExemplo());
-        Assert.True(await fabrica.Alunos.ExcluirAsync(criado.Id));
+        Assert.True((await fabrica.Alunos.ExcluirAsync(criado.Id)).Sucesso);
         Assert.Null(await fabrica.Alunos.ObterAsync(criado.Id));
-        Assert.Empty(await fabrica.Alunos.ListarAsync());
 
         var empresa = await fabrica.Empresas.CadastrarAsync(fabrica.EmpresaExemplo(email: "ana@pucminas.br"));
         Assert.True(empresa.Sucesso);
@@ -119,7 +118,7 @@ public class CadastroTestes
         Assert.NotNull(await fabrica.Autenticacao.EntrarAsync("contato@cantina.br", "novasenha"));
         Assert.Null(await fabrica.Autenticacao.EntrarAsync("contato@cantina.br", "segredo"));
 
-        Assert.True(await fabrica.Empresas.ExcluirAsync(criada.Id));
+        Assert.True((await fabrica.Empresas.ExcluirAsync(criada.Id)).Sucesso);
         Assert.Empty(await fabrica.Empresas.ListarAsync());
     }
 

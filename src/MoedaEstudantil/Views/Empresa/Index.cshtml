@@ -6,9 +6,8 @@
 <section class="cabeca-pagina">
     <div>
         <h1>Empresas parceiras</h1>
-        <p>Cadastros gravados no banco. Editar e excluir vale só para o próprio login.</p>
+        <p>Empresas que oferecem vantagens aos alunos. Abra uma empresa para ver as vantagens na vitrine.</p>
     </div>
-    <a class="botao" asp-action="Novo">Nova empresa</a>
 </section>
 
 @if (Model.Count == 0)
@@ -24,6 +23,7 @@ else
                     <th>Nome fantasia</th>
                     <th>E-mail</th>
                     <th>CNPJ</th>
+                    <th class="numero">Vantagens ativas</th>
                     <th></th>
                 </tr>
             </thead>
@@ -34,6 +34,7 @@ else
                     <td>@empresa.NomeFantasia</td>
                     <td>@empresa.Email</td>
                     <td>@Documento.FormatarCnpj(empresa.Cnpj)</td>
+                    <td class="numero">@empresa.Vantagens.Count</td>
                     <td class="acoes-tabela">
                         <a asp-action="Detalhes" asp-route-id="@empresa.Id">Abrir</a>
                         @if (SessaoCookie.EhDono(User, empresa.Id))

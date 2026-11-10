@@ -1,0 +1,18 @@
+@model Vantagem
+@{
+    ViewData["Title"] = "Excluir vantagem";
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <h1>Excluir vantagem</h1>
+        <p>"@Model.Descricao" será removida. Se algum aluno já trocou moedas por ela, a vantagem é só desativada, para manter os cupons emitidos.</p>
+    </div>
+</section>
+
+<form class="formulario formulario-estreito" method="post" asp-action="ConfirmarExclusaoVantagem" asp-route-vantagemId="@Model.Id">
+    <div class="acoes">
+        <button class="botao botao-perigo" type="submit">Excluir vantagem</button>
+        <a class="botao botao-secundario" asp-action="Vantagens">Cancelar</a>
+    </div>
+</form>

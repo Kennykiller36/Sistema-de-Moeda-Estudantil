@@ -1,0 +1,95 @@
+@model ConferenciaCupons
+@{
+    ViewData["Title"] = "Cupons";
+    var cupom = Model.Encontrado;
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <p class="olho">Empresa parceira</p>
+        <h1>Conferir cupom</h1>
+        <p>Digite o código que o aluno apresentou. O mesmo código chegou no e-mail da empresa no momento da troca.</p>
+    </div>
+</section>
+
+<form class="formulario conferencia" method="get" asp-action="Cupons">
+    <div asp-validation-summary="ModelOnly" class="aviso aviso-erro"></div>
+    <div class="campo">
+        <label for="codigo">Código do cupom</label>
+        <input id="codigo" name="codigo" value="@Model.Codigo" placeholder="ME-XXXX-XXXX" autocomplete="off" autocapitalize="characters" required />
+    </div>
+    <div class="acoes">
+        <button class="botao" type="submit">Conferir</button>
+    </div>
+</form>
+
+@if (cupom is not null)
+{
+    <section class="painel resultado-cupom">
+        <p class="codigo-cupom">@cupom.Codigo</p>
+        <dl class="ficha">
+            <div><dt>Aluno</dt><dd>@cupom.Aluno.Nome</dd></div>
+            <div><dt>Vantagem</dt><dd>@cupom.Vantagem.Descricao</dd></div>
+            <div><dt>Gerado em</dt><dd>@cupom.DataGeracao.ToString("dd/MM/yyyy HH:mm")</dd></div>
+        </dl>
+        @if (cupom.Utilizado)
+        {
+            <p class="aviso aviso-erro">Este cupom já foi utilizado em @cupom.DataUtilizacao?.ToString("dd/MM/yyyy 'às' HH:mm").</p>
+        }
+        else
+        {
+            <form method="post" asp-action="UtilizarCupom" data-envio-unico>
+                <input type="hidden" name="codigo" value="@cupom.Codigo" />
+                <div class="acoes">
+                    <button class="botao" type="submit">Confirmar utilização</button>
+                    <span class="detalhe">Confirme só ao entregar a vantagem. O cupom não pode ser usado de novo.</span>
+                </div>
+            </form>
+        }
+    </section>
+}
+
+<section class="secao">
+    <h2>Cupons emitidos</h2>
+    @if (Model.Cupons.Count == 0)
+    {
+        <p class="vazio">Nenhum aluno trocou moedas por vantagens da empresa ainda.</p>
+    }
+    else
+    {
+        <div class="tabela-rolagem">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Aluno</th>
+                        <th>Vantagem</th>
+                        <th>Gerado em</th>
+                        <th>Situação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Cupons)
+                {
+                    <tr>
+                        <td><a asp-action="Cupons" asp-route-codigo="@item.Codigo">@item.Codigo</a></td>
+                        <td>@item.Aluno.Nome</td>
+                        <td>@item.Vantagem.Descricao</td>
+                        <td>@item.DataGeracao.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            @if (item.Utilizado)
+                            {
+                                <span class="etiqueta etiqueta-ok">Utilizado em @item.DataUtilizacao?.ToString("dd/MM/yyyy")</span>
+                            }
+                            else
+                            {
+                                <span class="etiqueta etiqueta-alerta">A conferir</span>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

@@ -47,7 +47,7 @@ public class AlunoConfiguracao : IEntityTypeConfiguration<Aluno>
         builder.Property(a => a.Rg).HasColumnName("rg").HasMaxLength(20).IsRequired();
         builder.Property(a => a.Endereco).HasColumnName("endereco").HasMaxLength(240).IsRequired();
         builder.Property(a => a.Curso).HasColumnName("curso").HasMaxLength(120).IsRequired();
-        builder.Property(a => a.Saldo).HasColumnName("saldo").HasDefaultValue(0).IsRequired();
+        builder.Property(a => a.Saldo).HasColumnName("saldo").HasDefaultValue(0).IsRequired().IsConcurrencyToken();
         builder.Property(a => a.InstituicaoId).HasColumnName("instituicao_id");
         builder.HasOne(a => a.Instituicao)
             .WithMany(i => i.Alunos)
@@ -66,7 +66,7 @@ public class ProfessorConfiguracao : IEntityTypeConfiguration<Professor>
         builder.Property(p => p.Cpf).HasColumnName("cpf").HasMaxLength(11).IsRequired();
         builder.HasIndex(p => p.Cpf).IsUnique();
         builder.Property(p => p.Departamento).HasColumnName("departamento").HasMaxLength(120).IsRequired();
-        builder.Property(p => p.Saldo).HasColumnName("saldo").HasDefaultValue(0).IsRequired();
+        builder.Property(p => p.Saldo).HasColumnName("saldo").HasDefaultValue(0).IsRequired().IsConcurrencyToken();
         builder.Property(p => p.InstituicaoId).HasColumnName("instituicao_id");
         builder.HasOne(p => p.Instituicao)
             .WithMany(i => i.Professores)
@@ -152,7 +152,8 @@ public class CupomConfiguracao : IEntityTypeConfiguration<Cupom>
         builder.Property(c => c.AlunoId).HasColumnName("aluno_id");
         builder.Property(c => c.VantagemId).HasColumnName("vantagem_id");
         builder.Property(c => c.EmpresaId).HasColumnName("empresa_id");
-        builder.Property(c => c.Utilizado).HasColumnName("utilizado").HasDefaultValue(false).IsRequired();
+        builder.Property(c => c.DataGeracao).HasColumnName("data_geracao").IsRequired();
+        builder.Property(c => c.Utilizado).HasColumnName("utilizado").HasDefaultValue(false).IsRequired().IsConcurrencyToken();
         builder.Property(c => c.DataUtilizacao).HasColumnName("data_utilizacao");
         builder.HasOne(c => c.Transacao)
             .WithOne(t => t.Cupom)
@@ -186,7 +187,10 @@ public class NotificacaoConfiguracao : IEntityTypeConfiguration<Notificacao>
             .HasMaxLength(20)
             .HasConversion(ConversorEnum.Texto<TipoNotificacao>())
             .IsRequired();
+        builder.Property(n => n.Assunto).HasColumnName("assunto").HasMaxLength(200).IsRequired();
+        builder.Property(n => n.Corpo).HasColumnName("corpo").HasMaxLength(4000).IsRequired();
         builder.Property(n => n.DataEnvio).HasColumnName("data_envio").IsRequired();
+        builder.HasIndex(n => n.Destinatario);
         builder.HasOne(n => n.Transacao)
             .WithMany(t => t.Notificacoes)
             .HasForeignKey(n => n.TransacaoId)
@@ -204,6 +208,7 @@ public class CreditoSemestralConfiguracao : IEntityTypeConfiguration<CreditoSeme
         builder.Property(c => c.ProfessorId).HasColumnName("professor_id");
         builder.Property(c => c.Semestre).HasColumnName("semestre").HasMaxLength(6).IsRequired();
         builder.Property(c => c.Quantidade).HasColumnName("quantidade").HasDefaultValue(1000).IsRequired();
+        builder.Property(c => c.DataAplicacao).HasColumnName("data_aplicacao").IsRequired();
         builder.HasIndex(c => new { c.ProfessorId, c.Semestre }).IsUnique();
         builder.HasOne(c => c.Professor)
             .WithMany(p => p.Creditos)

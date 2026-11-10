@@ -1,6 +1,8 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using MoedaEstudantil.Dominio;
+using MoedaEstudantil.Persistencia.Repositorios;
 using MoedaEstudantil.Servicos;
 
 namespace MoedaEstudantil.Controllers;
@@ -29,4 +31,23 @@ public static class SessaoCookie
         => long.TryParse(usuario.FindFirstValue(ClaimTypes.NameIdentifier), out var id) ? id : null;
 
     public static bool EhDono(ClaimsPrincipal usuario, long id) => Id(usuario) == id;
+
+    public static async Task ValidarAsync(CookieValidatePrincipalContext contexto)
+    {
+        var principal = contexto.Principal;
+        var id = principal is null ? null : Id(principal);
+        var email = principal?.FindFirstValue(ClaimTypes.Email);
+        var valido = id is not null
+            && email is not null
+            && Enum.TryParse<TipoUsuario>(principal!.FindFirstValue(ClaimTypes.Role), out var tipo)
+            && await contexto.HttpContext.RequestServices
+                .GetRequiredService<IUsuarioRepositorio>()
+                .SessaoValidaAsync(id.Value, email, tipo, contexto.HttpContext.RequestAborted);
+
+        if (valido)
+            return;
+
+        contexto.RejectPrincipal();
+        await EncerrarAsync(contexto.HttpContext);
+    }
 }

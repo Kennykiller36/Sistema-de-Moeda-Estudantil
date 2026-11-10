@@ -23,6 +23,8 @@ public class MoedaEstudantilContext : DbContext, IUnidadeDeTrabalho
 
     public Task SalvarAsync(CancellationToken cancelamento = default) => SaveChangesAsync(cancelamento);
 
+    public void DescartarAlteracoes() => ChangeTracker.Clear();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(MoedaEstudantilContext).Assembly);

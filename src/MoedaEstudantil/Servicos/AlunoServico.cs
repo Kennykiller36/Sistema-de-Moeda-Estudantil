@@ -10,25 +10,43 @@ public class AlunoServico
     private readonly IAlunoRepositorio _alunos;
     private readonly IUsuarioRepositorio _usuarios;
     private readonly IInstituicaoRepositorio _instituicoes;
+    private readonly ITransacaoRepositorio _transacoes;
     private readonly IUnidadeDeTrabalho _unidade;
 
     public AlunoServico(
         IAlunoRepositorio alunos,
         IUsuarioRepositorio usuarios,
         IInstituicaoRepositorio instituicoes,
+        ITransacaoRepositorio transacoes,
         IUnidadeDeTrabalho unidade)
     {
         _alunos = alunos;
         _usuarios = usuarios;
         _instituicoes = instituicoes;
+        _transacoes = transacoes;
         _unidade = unidade;
     }
 
-    public Task<IReadOnlyList<Aluno>> ListarAsync(CancellationToken cancelamento = default)
-        => _alunos.ListarComInstituicaoAsync(cancelamento);
-
     public Task<Aluno?> ObterAsync(long id, CancellationToken cancelamento = default)
         => _alunos.ObterComInstituicaoAsync(id, cancelamento);
+
+    public async Task<Extrato?> ExtratoAsync(long alunoId, CancellationToken cancelamento = default)
+    {
+        var aluno = await _alunos.ObterComInstituicaoAsync(alunoId, cancelamento);
+        if (aluno is null)
+            return null;
+
+        var transacoes = await _transacoes.ListarDoAlunoAsync(alunoId, cancelamento);
+        var movimentos = transacoes.Select(transacao => transacao.Tipo == TipoTransacao.Envio
+            ? new MovimentoExtrato(
+                transacao.DataHora, "Recebimento", $"De {transacao.Professor?.Nome}", transacao.Motivo, transacao.Quantidade)
+            : new MovimentoExtrato(
+                transacao.DataHora, "Troca", transacao.Vantagem?.Descricao ?? "Vantagem",
+                transacao.Vantagem?.Empresa.NomeFantasia, -transacao.Quantidade,
+                transacao.Cupom?.Codigo, transacao.Cupom?.Utilizado ?? false));
+
+        return new Extrato(aluno.Nome, aluno.Saldo, movimentos);
+    }
 
     public async Task<ResultadoCadastro> CadastrarAsync(DadosAluno dados, CancellationToken cancelamento = default)
     {
@@ -77,15 +95,19 @@ public class AlunoServico
         return await SalvarAsync(aluno, cancelamento);
     }
 
-    public async Task<bool> ExcluirAsync(long id, CancellationToken cancelamento = default)
+    public async Task<ResultadoCadastro> ExcluirAsync(long id, CancellationToken cancelamento = default)
     {
         var aluno = await _alunos.ObterParaEdicaoAsync(id, cancelamento);
         if (aluno is null)
-            return false;
+            return ResultadoCadastro.Ausente();
+
+        if (await _transacoes.AlunoPossuiMovimentacaoAsync(id, cancelamento))
+            return ResultadoCadastro.Falha(
+                "O cadastro tem moedas recebidas ou trocadas e não pode ser excluído: o extrato dos professores e os cupons das empresas dependem dele.");
 
         _alunos.Remover(aluno);
         await _unidade.SalvarAsync(cancelamento);
-        return true;
+        return ResultadoCadastro.Ok(id);
     }
 
     private async Task<ResultadoCadastro> SalvarAsync(Aluno aluno, CancellationToken cancelamento)
@@ -95,12 +117,15 @@ public class AlunoServico
             await _unidade.SalvarAsync(cancelamento);
             return ResultadoCadastro.Ok(aluno.Id);
         }
+        catch (DbUpdateConcurrencyException)
+        {
+            _unidade.DescartarAlteracoes();
+            return ResultadoCadastro.Falha("O cadastro mudou enquanto você editava. Abra de novo e repita a alteração.");
+        }
         catch (DbUpdateException)
         {
-            return ResultadoCadastro.Falha(new Dictionary<string, string>
-            {
-                [string.Empty] = "Não foi possível salvar. E-mail ou CPF já cadastrado."
-            });
+            _unidade.DescartarAlteracoes();
+            return ResultadoCadastro.Falha("Não foi possível salvar. E-mail ou CPF já cadastrado.");
         }
     }
 

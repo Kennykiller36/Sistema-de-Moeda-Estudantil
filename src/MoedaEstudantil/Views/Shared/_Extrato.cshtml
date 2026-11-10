@@ -1,0 +1,55 @@
+@model Extrato
+
+<div class="resumo-saldos">
+    <div class="saldo"><small>Saldo atual</small><strong>@Model.Saldo.ToString("N0")</strong><span>moedas</span></div>
+    <div class="saldo"><small>Entradas</small><strong class="valor-entrada">+@Model.TotalEntradas.ToString("N0")</strong></div>
+    <div class="saldo"><small>Saídas</small><strong class="valor-saida">−@Model.TotalSaidas.ToString("N0")</strong></div>
+</div>
+
+@if (Model.Linhas.Count == 0)
+{
+    <p class="vazio">Nenhuma movimentação ainda.</p>
+}
+else
+{
+    <div class="tabela-rolagem">
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Tipo</th>
+                    <th>Descrição</th>
+                    <th class="numero">Moedas</th>
+                    <th class="numero">Saldo após</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var linha in Model.Linhas)
+            {
+                var movimento = linha.Movimento;
+                var entrada = movimento.Quantidade >= 0;
+                <tr>
+                    <td>@movimento.Data.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td><span class="etiqueta @(entrada ? "etiqueta-ok" : "etiqueta-alerta")">@movimento.Tipo</span></td>
+                    <td>
+                        @movimento.Descricao
+                        @if (movimento.Detalhe is not null)
+                        {
+                            <span class="detalhe">@movimento.Detalhe</span>
+                        }
+                        @if (movimento.CodigoCupom is not null)
+                        {
+                            <span class="detalhe">
+                                Cupom <a asp-controller="Aluno" asp-action="Cupom" asp-route-codigo="@movimento.CodigoCupom">@movimento.CodigoCupom</a>
+                                · @(movimento.CupomUtilizado ? "utilizado" : "aguardando troca")
+                            </span>
+                        }
+                    </td>
+                    <td class="numero @(entrada ? "valor-entrada" : "valor-saida")">@(entrada ? "+" : "−")@Math.Abs(movimento.Quantidade).ToString("N0")</td>
+                    <td class="numero">@linha.SaldoApos.ToString("N0")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

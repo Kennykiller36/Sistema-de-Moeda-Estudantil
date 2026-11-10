@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MoedaEstudantil.Dominio;
+using MoedaEstudantil.Externos;
 using MoedaEstudantil.Persistencia;
 using MoedaEstudantil.Persistencia.Repositorios;
 
@@ -9,15 +10,24 @@ public class EmpresaServico
 {
     private readonly IEmpresaParceiraRepositorio _empresas;
     private readonly IUsuarioRepositorio _usuarios;
+    private readonly IVantagemRepositorio _vantagens;
+    private readonly ICupomRepositorio _cupons;
+    private readonly IArmazenamentoFotos _fotos;
     private readonly IUnidadeDeTrabalho _unidade;
 
     public EmpresaServico(
         IEmpresaParceiraRepositorio empresas,
         IUsuarioRepositorio usuarios,
+        IVantagemRepositorio vantagens,
+        ICupomRepositorio cupons,
+        IArmazenamentoFotos fotos,
         IUnidadeDeTrabalho unidade)
     {
         _empresas = empresas;
         _usuarios = usuarios;
+        _vantagens = vantagens;
+        _cupons = cupons;
+        _fotos = fotos;
         _unidade = unidade;
     }
 
@@ -65,15 +75,25 @@ public class EmpresaServico
         return await SalvarAsync(empresa, cancelamento);
     }
 
-    public async Task<bool> ExcluirAsync(long id, CancellationToken cancelamento = default)
+    public async Task<ResultadoCadastro> ExcluirAsync(long id, CancellationToken cancelamento = default)
     {
-        var empresa = await _empresas.ObterParaEdicaoAsync(id, cancelamento);
+        var empresa = await _empresas.ObterComVantagensAsync(id, cancelamento);
         if (empresa is null)
-            return false;
+            return ResultadoCadastro.Ausente();
 
+        if (await _cupons.EmpresaPossuiCuponsAsync(id, cancelamento))
+            return ResultadoCadastro.Falha(
+                "A empresa já emitiu cupons e não pode ser excluída, para não apagar o histórico dos alunos. Desative as vantagens para tirá-las da vitrine.");
+
+        var fotos = empresa.Vantagens.Select(vantagem => vantagem.Foto).ToList();
+        foreach (var vantagem in empresa.Vantagens.ToList())
+            _vantagens.Remover(vantagem);
         _empresas.Remover(empresa);
         await _unidade.SalvarAsync(cancelamento);
-        return true;
+
+        foreach (var foto in fotos)
+            _fotos.Remover(foto);
+        return ResultadoCadastro.Ok(id);
     }
 
     private async Task<ResultadoCadastro> SalvarAsync(EmpresaParceira empresa, CancellationToken cancelamento)
@@ -85,10 +105,8 @@ public class EmpresaServico
         }
         catch (DbUpdateException)
         {
-            return ResultadoCadastro.Falha(new Dictionary<string, string>
-            {
-                [string.Empty] = "Não foi possível salvar. E-mail ou CNPJ já cadastrado."
-            });
+            _unidade.DescartarAlteracoes();
+            return ResultadoCadastro.Falha("Não foi possível salvar. E-mail ou CNPJ já cadastrado.");
         }
     }
 

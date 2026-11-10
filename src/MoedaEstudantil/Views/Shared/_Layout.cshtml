@@ -17,27 +17,41 @@
                 </span>
             </a>
             <nav class="menu">
-                <a asp-controller="Aluno" asp-action="Novo">Cadastrar aluno</a>
-                <a asp-controller="Empresa" asp-action="Novo">Cadastrar empresa</a>
-                @if (User.Identity?.IsAuthenticated == true)
+                @if (User.Identity?.IsAuthenticated != true)
                 {
-                    <a asp-controller="Aluno" asp-action="Index">Alunos</a>
-                    <a asp-controller="Empresa" asp-action="Index">Empresas</a>
-                    @if (User.IsInRole("Aluno") && SessaoCookie.Id(User) is long alunoId)
-                    {
-                        <a asp-controller="Aluno" asp-action="Detalhes" asp-route-id="@alunoId">Meu cadastro</a>
-                    }
-                    @if (User.IsInRole("Empresa") && SessaoCookie.Id(User) is long empresaId)
-                    {
-                        <a asp-controller="Empresa" asp-action="Detalhes" asp-route-id="@empresaId">Meu cadastro</a>
-                    }
-                    <form class="sair" asp-controller="Autenticacao" asp-action="Sair" method="post">
-                        <button type="submit">Sair</button>
-                    </form>
+                    <a asp-controller="Aluno" asp-action="Novo">Cadastrar aluno</a>
+                    <a asp-controller="Empresa" asp-action="Novo">Cadastrar empresa</a>
+                    <a asp-controller="Autenticacao" asp-action="Entrar">Entrar</a>
                 }
                 else
                 {
-                    <a asp-controller="Autenticacao" asp-action="Entrar">Entrar</a>
+                    @if (User.IsInRole(nameof(TipoUsuario.Aluno)) && SessaoCookie.Id(User) is long alunoId)
+                    {
+                        <a asp-controller="Aluno" asp-action="Vantagens">Vantagens</a>
+                        <a asp-controller="Aluno" asp-action="Extrato">Extrato</a>
+                        <a asp-controller="Aluno" asp-action="Notificacoes">Notificações</a>
+                        <a asp-controller="Empresa" asp-action="Index">Empresas</a>
+                        <a asp-controller="Aluno" asp-action="Detalhes" asp-route-id="@alunoId">Meu cadastro</a>
+                    }
+                    @if (User.IsInRole(nameof(TipoUsuario.Professor)))
+                    {
+                        <a asp-controller="Professor" asp-action="Enviar">Enviar moedas</a>
+                        <a asp-controller="Professor" asp-action="Extrato">Extrato</a>
+                        <a asp-controller="Professor" asp-action="Alunos">Alunos</a>
+                        <a asp-controller="Empresa" asp-action="Index">Empresas</a>
+                        <a asp-controller="Professor" asp-action="Senha">Senha</a>
+                    }
+                    @if (User.IsInRole(nameof(TipoUsuario.Empresa)) && SessaoCookie.Id(User) is long empresaId)
+                    {
+                        <a asp-controller="Empresa" asp-action="Vantagens">Minhas vantagens</a>
+                        <a asp-controller="Empresa" asp-action="Cupons">Cupons</a>
+                        <a asp-controller="Empresa" asp-action="Notificacoes">Notificações</a>
+                        <a asp-controller="Empresa" asp-action="Detalhes" asp-route-id="@empresaId">Meu cadastro</a>
+                    }
+                    <span class="usuario-atual">@User.Identity?.Name</span>
+                    <form class="sair" asp-controller="Autenticacao" asp-action="Sair" method="post">
+                        <button type="submit">Sair</button>
+                    </form>
                 }
             </nav>
         </div>
@@ -47,6 +61,10 @@
         {
             <p class="aviso aviso-ok" role="status">@mensagem</p>
         }
+        @if (TempData["MensagemAviso"] is string alerta)
+        {
+            <p class="aviso aviso-alerta" role="status">@alerta</p>
+        }
         @if (TempData["MensagemErro"] is string erro)
         {
             <p class="aviso aviso-erro" role="alert">@erro</p>
@@ -54,7 +72,7 @@
         @RenderBody()
     </main>
     <footer class="rodape">
-        <p>Sprint 2 — cadastro de aluno e de empresa parceira, com o modelo relacional já persistido.</p>
+        <p>Sprint 3 — envio de moedas, vantagens, cupons e extratos, com aviso por e-mail.</p>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

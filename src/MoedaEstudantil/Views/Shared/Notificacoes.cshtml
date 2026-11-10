@@ -1,0 +1,33 @@
+@model CaixaNotificacoes
+@{
+    ViewData["Title"] = "Notificações";
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <h1>Notificações</h1>
+        <p>E-mails que o sistema enviou para @Model.Email.</p>
+    </div>
+</section>
+
+@if (Model.Notificacoes.Count == 0)
+{
+    <p class="vazio">Nenhum e-mail enviado para este endereço ainda.</p>
+}
+else
+{
+    <div class="notificacoes">
+        @foreach (var notificacao in Model.Notificacoes)
+        {
+            var cupom = notificacao.Tipo == TipoNotificacao.Cupom;
+            <article class="notificacao">
+                <p class="meta">
+                    <span class="etiqueta @(cupom ? "etiqueta-alerta" : "etiqueta-ok")">@(cupom ? "Cupom" : "Moedas")</span>
+                    @notificacao.DataEnvio.ToString("dd/MM/yyyy 'às' HH:mm")
+                </p>
+                <h2>@notificacao.Assunto</h2>
+                <p class="corpo-email">@notificacao.Corpo</p>
+            </article>
+        }
+    </div>
+}

@@ -24,6 +24,10 @@ namespace MoedaEstudantil.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
+                    b.Property<DateTime>("DataAplicacao")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("data_aplicacao");
+
                     b.Property<long>("ProfessorId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("professor_id");
@@ -68,6 +72,10 @@ namespace MoedaEstudantil.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("codigo");
 
+                    b.Property<DateTime>("DataGeracao")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("data_geracao");
+
                     b.Property<DateTime?>("DataUtilizacao")
                         .HasColumnType("TEXT")
                         .HasColumnName("data_utilizacao");
@@ -81,6 +89,7 @@ namespace MoedaEstudantil.Migrations
                         .HasColumnName("transacao_id");
 
                     b.Property<bool>("Utilizado")
+                        .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(false)
@@ -147,6 +156,18 @@ namespace MoedaEstudantil.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
+                    b.Property<string>("Assunto")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("assunto");
+
+                    b.Property<string>("Corpo")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("corpo");
+
                     b.Property<DateTime>("DataEnvio")
                         .HasColumnType("TEXT")
                         .HasColumnName("data_envio");
@@ -168,6 +189,8 @@ namespace MoedaEstudantil.Migrations
                         .HasColumnName("transacao_id");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Destinatario");
 
                     b.HasIndex("TransacaoId");
 
@@ -343,6 +366,7 @@ namespace MoedaEstudantil.Migrations
                         .HasColumnName("rg");
 
                     b.Property<int>("Saldo")
+                        .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(0)
@@ -415,6 +439,7 @@ namespace MoedaEstudantil.Migrations
                         .HasColumnName("nome");
 
                     b.Property<int>("Saldo")
+                        .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(0)

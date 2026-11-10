@@ -1,0 +1,41 @@
+@model ConfirmacaoResgate
+@{
+    ViewData["Title"] = "Confirmar troca";
+    var vantagem = Model.Vantagem;
+    var saldoApos = Model.Saldo - vantagem.CustoMoedas;
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <p class="olho">Troca</p>
+        <h1>Confirmar troca</h1>
+        <p>As moedas são descontadas na hora e o cupom é enviado para você e para a empresa.</p>
+    </div>
+</section>
+
+<div class="confirmacao">
+    <img class="foto-grande" src="@ArmazenamentoFotosEmDisco.Url(vantagem.Foto)" alt="Foto da vantagem: @vantagem.Descricao" />
+    <div class="formulario">
+        <p class="olho">@vantagem.Empresa.NomeFantasia</p>
+        <h2>@vantagem.Descricao</h2>
+        <dl class="ficha">
+            <div><dt>Custo</dt><dd>@vantagem.CustoMoedas.ToString("N0") moedas</dd></div>
+            <div><dt>Seu saldo</dt><dd>@Model.Saldo.ToString("N0") moedas</dd></div>
+            <div><dt>Saldo após a troca</dt><dd>@saldoApos.ToString("N0") moedas</dd></div>
+        </dl>
+        @if (saldoApos < 0)
+        {
+            <p class="aviso aviso-erro">Saldo insuficiente para esta vantagem.</p>
+            <a class="botao botao-secundario" asp-action="Vantagens">Voltar à vitrine</a>
+        }
+        else
+        {
+            <form method="post" asp-action="ConfirmarResgate" asp-route-vantagemId="@vantagem.Id" data-envio-unico>
+                <div class="acoes">
+                    <button class="botao" type="submit">Confirmar troca</button>
+                    <a class="botao botao-secundario" asp-action="Vantagens">Voltar</a>
+                </div>
+            </form>
+        }
+    </div>
+</div>

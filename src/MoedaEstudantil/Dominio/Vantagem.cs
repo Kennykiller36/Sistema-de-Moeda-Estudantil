@@ -12,4 +12,8 @@ public class Vantagem
 
     public ICollection<Transacao> Transacoes { get; set; } = new List<Transacao>();
     public ICollection<Cupom> Cupons { get; set; } = new List<Cupom>();
+
+    public void Publicar() => Ativa = true;
+
+    public void Desativar() => Ativa = false;
 }

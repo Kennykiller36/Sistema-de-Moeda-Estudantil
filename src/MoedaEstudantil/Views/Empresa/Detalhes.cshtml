@@ -1,27 +1,69 @@
-@model EmpresaParceira
+@model DetalhesEmpresa
 @{
-    ViewData["Title"] = Model.NomeFantasia;
+    var empresa = Model.Empresa;
+    var dono = SessaoCookie.EhDono(User, empresa.Id);
+    var aluno = User.IsInRole(nameof(TipoUsuario.Aluno));
+    ViewData["Title"] = empresa.NomeFantasia;
 }
 
 <section class="cabeca-pagina">
     <div>
         <p class="olho">Empresa parceira</p>
-        <h1>@Model.NomeFantasia</h1>
-        <p>@Model.Email</p>
+        <h1>@empresa.NomeFantasia</h1>
+        <p>@empresa.Email</p>
     </div>
-    @if (SessaoCookie.EhDono(User, Model.Id))
+    @if (dono)
     {
         <div class="acoes">
-            <a class="botao" asp-action="Editar" asp-route-id="@Model.Id">Editar</a>
-            <a class="botao botao-perigo" asp-action="Excluir" asp-route-id="@Model.Id">Excluir</a>
+            <a class="botao" asp-action="Editar" asp-route-id="@empresa.Id">Editar</a>
+            <a class="botao botao-perigo" asp-action="Excluir" asp-route-id="@empresa.Id">Excluir</a>
         </div>
     }
 </section>
 
 <dl class="ficha">
-    <div><dt>CNPJ</dt><dd>@Documento.FormatarCnpj(Model.Cnpj)</dd></div>
-    <div><dt>E-mail</dt><dd>@Model.Email</dd></div>
-    <div><dt>Login</dt><dd>Empresa parceira</dd></div>
+    <div><dt>CNPJ</dt><dd>@Documento.FormatarCnpj(empresa.Cnpj)</dd></div>
+    <div><dt>E-mail</dt><dd>@empresa.Email</dd></div>
+    <div><dt>Vantagens na vitrine</dt><dd>@Model.Vantagens.Count(vantagem => vantagem.Ativa)</dd></div>
 </dl>
+
+<section class="secao">
+    <div class="cabeca-pagina">
+        <h2>Vantagens</h2>
+        @if (dono)
+        {
+            <a class="botao" asp-action="Vantagens">Gerenciar vantagens</a>
+        }
+    </div>
+    @if (Model.Vantagens.Count == 0)
+    {
+        <p class="vazio">Nenhuma vantagem cadastrada.</p>
+    }
+    else
+    {
+        <div class="vitrine">
+            @foreach (var vantagem in Model.Vantagens)
+            {
+                <article class="vantagem @(vantagem.Ativa ? null : "vantagem-inativa")">
+                    <img src="@ArmazenamentoFotosEmDisco.Url(vantagem.Foto)" alt="Foto da vantagem: @vantagem.Descricao" loading="lazy" />
+                    <div class="vantagem-corpo">
+                        <p>@vantagem.Descricao</p>
+                        <div class="vantagem-rodape">
+                            <span class="custo">@vantagem.CustoMoedas.ToString("N0") moedas</span>
+                            @if (aluno)
+                            {
+                                <a class="botao" asp-controller="Aluno" asp-action="Resgatar" asp-route-vantagemId="@vantagem.Id">Trocar</a>
+                            }
+                            else if (!vantagem.Ativa)
+                            {
+                                <span class="etiqueta">Fora da vitrine</span>
+                            }
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    }
+</section>
 
 <p class="volta"><a asp-action="Index">Voltar para a lista</a></p>

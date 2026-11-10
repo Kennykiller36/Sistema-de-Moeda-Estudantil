@@ -1,0 +1,38 @@
+@model SenhaFormulario
+@{
+    ViewData["Title"] = "Alterar senha";
+}
+
+<section class="cabeca-pagina">
+    <div>
+        <p class="olho">Professor</p>
+        <h1>Alterar senha</h1>
+        <p>Troque a senha inicial recebida da instituição.</p>
+    </div>
+</section>
+
+<form class="formulario formulario-estreito" method="post" asp-action="Senha">
+    <div asp-validation-summary="ModelOnly" class="aviso aviso-erro"></div>
+    <div class="campo">
+        <label asp-for="SenhaAtual"></label>
+        <input asp-for="SenhaAtual" autocomplete="current-password" />
+        <span asp-validation-for="SenhaAtual"></span>
+    </div>
+    <div class="campo">
+        <label asp-for="NovaSenha"></label>
+        <input asp-for="NovaSenha" autocomplete="new-password" />
+        <span asp-validation-for="NovaSenha"></span>
+    </div>
+    <div class="campo">
+        <label asp-for="ConfirmarSenha"></label>
+        <input asp-for="ConfirmarSenha" autocomplete="new-password" />
+        <span asp-validation-for="ConfirmarSenha"></span>
+    </div>
+    <div class="acoes">
+        <button class="botao" type="submit">Salvar senha</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

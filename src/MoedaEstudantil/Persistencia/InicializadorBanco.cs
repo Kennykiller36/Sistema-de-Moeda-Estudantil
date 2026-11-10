@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MoedaEstudantil.Dominio;
+using MoedaEstudantil.Servicos;
 
 namespace MoedaEstudantil.Persistencia;
 
@@ -13,6 +14,14 @@ public static class InicializadorBanco
         ("Pontifícia Universidade Católica de Minas Gerais", "100000000001", "Belo Horizonte"),
         ("Universidade Federal de Minas Gerais", "200000000001", "Belo Horizonte"),
         ("Universidade Federal de Ouro Preto", "300000000001", "Ouro Preto")
+    ];
+
+    private static readonly (string Nome, string Email, string BaseCpf, string Departamento, string BaseCnpjInstituicao)[] ProfessoresPrevistos =
+    [
+        ("Marina Couto", "marina.couto@pucminas.br", "100000001", "Departamento de Engenharia de Software", "100000000001"),
+        ("Ricardo Lacerda", "ricardo.lacerda@pucminas.br", "100000002", "Departamento de Ciência da Computação", "100000000001"),
+        ("Helena Prado", "helena.prado@ufmg.br", "200000001", "Departamento de Ciência da Computação", "200000000001"),
+        ("Tiago Moreira", "tiago.moreira@ufop.edu.br", "300000001", "Departamento de Computação e Sistemas", "300000000001")
     ];
 
     public static async Task AplicarAsync(IServiceProvider servicos)
@@ -32,6 +41,30 @@ public static class InicializadorBanco
                 Nome = prevista.Nome,
                 Cnpj = cnpj,
                 Cidade = prevista.Cidade
+            });
+        }
+
+        await contexto.SaveChangesAsync();
+
+        var senhaInicial = escopo.ServiceProvider.GetRequiredService<IConfiguration>()["Professores:SenhaInicial"];
+        if (string.IsNullOrWhiteSpace(senhaInicial))
+            return;
+
+        foreach (var previsto in ProfessoresPrevistos)
+        {
+            if (await contexto.Usuarios.AnyAsync(usuario => usuario.Email == previsto.Email))
+                continue;
+
+            var cnpj = Documento.CompletarCnpj(previsto.BaseCnpjInstituicao);
+            var instituicao = await contexto.Instituicoes.FirstAsync(instituicao => instituicao.Cnpj == cnpj);
+            contexto.Professores.Add(new Professor
+            {
+                Nome = previsto.Nome,
+                Email = previsto.Email,
+                Senha = SenhaHasher.Gerar(senhaInicial),
+                Cpf = Documento.CompletarCpf(previsto.BaseCpf),
+                Departamento = previsto.Departamento,
+                InstituicaoId = instituicao.Id
             });
         }
 

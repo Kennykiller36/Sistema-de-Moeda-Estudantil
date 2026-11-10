@@ -25,6 +25,17 @@ public static class Documento
             && DigitoCnpj(cnpj[..13]) == cnpj[13] - '0';
     }
 
+    public static string CompletarCpf(string base9)
+    {
+        var baseLimpa = SomenteDigitos(base9);
+        if (baseLimpa.Length != 9)
+            throw new ArgumentException("A base do CPF precisa ter 9 dígitos.", nameof(base9));
+
+        var primeiro = DigitoCpf(baseLimpa);
+        var segundo = DigitoCpf(baseLimpa + primeiro);
+        return baseLimpa + primeiro + segundo;
+    }
+
     public static string CompletarCnpj(string base12)
     {
         var baseLimpa = SomenteDigitos(base12);
