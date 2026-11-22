@@ -3,7 +3,7 @@
 }
 
 <section class="abertura">
-    <p class="olho">Laboratório 3 · Sprint 3</p>
+    <p class="olho">Reconhecimento de mérito estudantil</p>
     <h1>Moeda para reconhecer mérito estudantil</h1>
     <p class="resumo">
         Professores distribuem moedas aos alunos pelo bom desempenho. Os alunos trocam as moedas
@@ -13,7 +13,8 @@
 
 @if (User.IsInRole(nameof(TipoUsuario.Aluno)))
 {
-    <section class="painel">
+    <section class="painel painel-inicio">
+        <p class="olho">Aluno</p>
         <h2>Olá, @User.Identity?.Name</h2>
         <p>Veja o saldo e os recebimentos no extrato, ou escolha uma vantagem para trocar.</p>
         <div class="acoes">
@@ -25,7 +26,8 @@
 }
 else if (User.IsInRole(nameof(TipoUsuario.Professor)))
 {
-    <section class="painel">
+    <section class="painel painel-inicio">
+        <p class="olho">Professor</p>
         <h2>Olá, @User.Identity?.Name</h2>
         <p>Você recebe 1.000 moedas por semestre, somadas ao saldo que sobrou. Reconheça um aluno da sua instituição.</p>
         <div class="acoes">
@@ -37,7 +39,8 @@ else if (User.IsInRole(nameof(TipoUsuario.Professor)))
 }
 else if (User.IsInRole(nameof(TipoUsuario.Empresa)))
 {
-    <section class="painel">
+    <section class="painel painel-inicio">
+        <p class="olho">Empresa parceira</p>
         <h2>Olá, @User.Identity?.Name</h2>
         <p>Cadastre vantagens com foto e custo em moedas. Quando um aluno troca, o cupom chega no seu e-mail para conferência.</p>
         <div class="acoes">

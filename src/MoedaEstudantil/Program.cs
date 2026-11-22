@@ -1,7 +1,10 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using MoedaEstudantil.Controllers;
@@ -11,6 +14,17 @@ using MoedaEstudantil.Persistencia.Repositorios;
 using MoedaEstudantil.Servicos;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var portaPublica = builder.Configuration["PORT"];
+if (!string.IsNullOrWhiteSpace(portaPublica))
+    builder.WebHost.UseUrls($"http://0.0.0.0:{portaPublica}");
+
+builder.Services.Configure<ForwardedHeadersOptions>(opcoes =>
+{
+    opcoes.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    opcoes.KnownNetworks.Clear();
+    opcoes.KnownProxies.Clear();
+});
 
 var cultura = new CultureInfo("pt-BR");
 CultureInfo.DefaultThreadCurrentCulture = cultura;
@@ -29,6 +43,14 @@ builder.Services.AddControllersWithViews(opcoes =>
 
 var raiz = builder.Environment.ContentRootPath;
 var conexao = ConexaoSqlite.Resolver(builder.Configuration.GetConnectionString("Padrao")!, raiz);
+var pastaDados = Path.GetDirectoryName(new SqliteConnectionStringBuilder(conexao).DataSource);
+if (!string.IsNullOrEmpty(pastaDados))
+{
+    var pastaChaves = Path.Combine(pastaDados, "chaves");
+    Directory.CreateDirectory(pastaChaves);
+    builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(pastaChaves));
+}
+
 builder.Services.AddDbContext<MoedaEstudantilContext>(opcoes => opcoes.UseSqlite(conexao));
 builder.Services.AddScoped<IUnidadeDeTrabalho>(provedor => provedor.GetRequiredService<MoedaEstudantilContext>());
 builder.Services.AddScoped<IAlunoRepositorio, AlunoRepositorio>();
@@ -76,6 +98,8 @@ await InicializadorBanco.AplicarAsync(app.Services);
 using (var escopo = app.Services.CreateScope())
     await escopo.ServiceProvider.GetRequiredService<MoedaServico>().CreditarSemestreDeTodosAsync();
 
+app.UseForwardedHeaders();
+
 if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 
@@ -86,6 +110,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     SupportedUICultures = [cultura]
 });
 
+app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(pastaFotos),

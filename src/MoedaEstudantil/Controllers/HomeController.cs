@@ -8,6 +8,9 @@ public class HomeController : Controller
 {
     public IActionResult Index() => View();
 
+    [HttpGet("/saude")]
+    public IActionResult Saude() => Content("ok");
+
     [HttpGet("/acesso-negado")]
     public IActionResult AcessoNegado()
     {

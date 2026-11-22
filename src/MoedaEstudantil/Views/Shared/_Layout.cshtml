@@ -48,10 +48,12 @@
                         <a asp-controller="Empresa" asp-action="Notificacoes">Notificações</a>
                         <a asp-controller="Empresa" asp-action="Detalhes" asp-route-id="@empresaId">Meu cadastro</a>
                     }
-                    <span class="usuario-atual">@User.Identity?.Name</span>
-                    <form class="sair" asp-controller="Autenticacao" asp-action="Sair" method="post">
-                        <button type="submit">Sair</button>
-                    </form>
+                    <div class="conta">
+                        <span class="usuario-atual">@User.Identity?.Name</span>
+                        <form class="sair" asp-controller="Autenticacao" asp-action="Sair" method="post">
+                            <button type="submit">Sair</button>
+                        </form>
+                    </div>
                 }
             </nav>
         </div>
@@ -72,7 +74,7 @@
         @RenderBody()
     </main>
     <footer class="rodape">
-        <p>Sprint 3 — envio de moedas, vantagens, cupons e extratos, com aviso por e-mail.</p>
+        <p>Envio de moedas, vantagens, cupons e extratos, com aviso por e-mail.</p>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

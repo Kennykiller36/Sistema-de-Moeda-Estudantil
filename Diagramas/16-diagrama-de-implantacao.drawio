@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="implantacao" name="Diagrama de implantação">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1680" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="titulo" value="Diagrama de implantação — Sistema de Moeda Estudantil" style="text;html=1;fontStyle=1;fontSize=20;align=left;verticalAlign=middle;fontColor=#1d2923;" vertex="1" parent="1">
+          <mxGeometry x="40" y="16" width="900" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="usuario" value="&lt;&lt;device&gt;&gt;&#10;Computador do usuário" style="swimlane;startSize=52;horizontal=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;collapsible=0;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="40" y="280" width="280" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="navegador" value="&lt;&lt;artifact&gt;&gt;&#10;Navegador web" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="usuario">
+          <mxGeometry x="40" y="80" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="render" value="&lt;&lt;node&gt;&gt;&#10;Render — serviço web moeda-estudantil" style="swimlane;startSize=52;horizontal=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=15;collapsible=0;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="440" y="70" width="820" height="760" as="geometry" />
+        </mxCell>
+        <mxCell id="docker" value="&lt;&lt;executionEnvironment&gt;&gt;&#10;Container Docker · Linux · porta 8080" style="swimlane;startSize=46;horizontal=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;collapsible=0;html=1;whiteSpace=wrap;" vertex="1" parent="render">
+          <mxGeometry x="30" y="70" width="760" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="kestrel" value="&lt;&lt;executionEnvironment&gt;&gt;&#10;Kestrel&#10;http://0.0.0.0:8080" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#82b366;fontSize=13;" vertex="1" parent="docker">
+          <mxGeometry x="30" y="70" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="artefato" value="&lt;&lt;artifact&gt;&gt;&#10;MoedaEstudantil.dll&#10;&#10;Views Razor&#10;Controllers&#10;Serviços&#10;Entity Framework Core" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#82b366;fontSize=13;" vertex="1" parent="docker">
+          <mxGeometry x="290" y="70" width="430" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="disco" value="&lt;&lt;device&gt;&gt;&#10;Disco · /app/dados ou /var/dados" style="swimlane;startSize=46;horizontal=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=13;collapsible=0;html=1;whiteSpace=wrap;" vertex="1" parent="render">
+          <mxGeometry x="30" y="490" width="760" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value="&lt;&lt;artifact&gt;&gt;&#10;moeda-estudantil.db&#10;SQLite" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fontSize=13;fillColor=#ffffff;strokeColor=#d79b00;" vertex="1" parent="disco">
+          <mxGeometry x="24" y="70" width="210" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="fotos" value="&lt;&lt;artifact&gt;&gt;&#10;fotos" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="disco">
+          <mxGeometry x="260" y="80" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="emails" value="&lt;&lt;artifact&gt;&gt;&#10;emails (.eml)" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="disco">
+          <mxGeometry x="420" y="80" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="chaves" value="&lt;&lt;artifact&gt;&gt;&#10;chaves" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="disco">
+          <mxGeometry x="590" y="80" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="smtp" value="&lt;&lt;device&gt;&gt;&#10;Servidor SMTP&#10;(opcional)" style="swimlane;startSize=68;horizontal=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=14;collapsible=0;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="280" width="280" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="caixa" value="&lt;&lt;artifact&gt;&gt;&#10;Caixa de correio" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#b85450;fontSize=13;" vertex="1" parent="smtp">
+          <mxGeometry x="40" y="88" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="https" value="HTTPS :443" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.45;entryDx=0;entryDy=0;" edge="1" parent="1" source="usuario" target="render">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sqlite" value="SQLite e arquivos" style="endArrow=open;endFill=0;html=1;rounded=0;strokeWidth=2;strokeColor=#d79b00;fontSize=13;fontStyle=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="docker" target="disco">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="smtp_link" value="SMTP :587" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=2;strokeColor=#b85450;fontSize=13;fontStyle=1;dashed=1;exitX=1;exitY=0.4;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="render" target="smtp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nota" value="A interface gráfica é gerada no servidor (Razor) e vai no mesmo artefato do backend. Por isso a nuvem tem um único nó, o serviço web no Render. A Vercel não hospeda o runtime ASP.NET Core. Sem Email:Host, o cupom e o aviso de moedas ficam como .eml no disco e também nas notificações da tela. Com host, a linha tracejada envia o mesmo e-mail por SMTP. O plano gratuito recria o disco a cada publicação; um disco montado em /var/dados conserva o banco, as fotos, os e-mails e as chaves do cookie." style="shape=note;whiteSpace=wrap;html=1;align=left;spacingLeft=10;spacingRight=10;fontSize=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="40" y="870" width="1580" height="130" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
