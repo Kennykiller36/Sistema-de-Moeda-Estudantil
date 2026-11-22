@@ -6,7 +6,24 @@ Protótipo da disciplina Projeto de Software. A entrega atual é a sprint 2 do L
 
 - Diagrama de implantação em `Diagramas/16-diagrama-de-implantacao.drawio`, com a imagem ao lado.
 - Contêiner Docker da aplicação e o serviço descrito em `render.yaml`.
+- Aplicação no ar: https://moeda-estudantil-ej1s.onrender.com
 - A interface Razor e o backend MVC são o mesmo processo. O nó de execução na nuvem é um único serviço web no Render. A Vercel não executa ASP.NET Core; ela entraria no diagrama se a interface fosse um site estático separado.
+
+## Aplicação publicada
+
+O deploy do commit `af707e6` (Sprint 2) concluiu pelo Blueprint `moeda-estudantil` em 22 de novembro de 2026, às 4:13 (GMT-3). O serviço ficou **Live**.
+
+| | |
+| --- | --- |
+| Endereço | https://moeda-estudantil-ej1s.onrender.com |
+| Serviço | `moeda-estudantil` |
+| Gatilho | Blueprint |
+| Commit | `af707e6` |
+| Ambiente | Production |
+| Porta interna | `8080` |
+| Verificação | `/saude` |
+
+No plano gratuito o serviço dorme depois de um tempo sem acesso. O primeiro carregamento pode levar cerca de um minuto. Professores de demonstração entram com a senha `professor123`, por exemplo `marina.couto@pucminas.br`. Alunos e empresas se cadastram pela tela inicial.
 
 ## Como executar
 
@@ -54,8 +71,10 @@ A aplicação fica em `http://localhost:8080`. A verificação usada pelo Render
 
 ## Como publicar no Render
 
+O serviço já está publicado em https://moeda-estudantil-ej1s.onrender.com. Um push na `main` dispara outro deploy pelo Blueprint. Para recriar do zero:
+
 1. Envie este repositório para o GitHub.
-2. No Render, crie um Blueprint apontando para o repositório. O `render.yaml` define o serviço `moeda-estudantil`, a porta `8080` e a verificação em `/saude`.
+2. No Render, crie um Blueprint apontando para o repositório, branch `main`, arquivo `render.yaml`. O nome usado nesta entrega foi `moeda-estudantil`.
 3. No plano gratuito o disco do contêiner é recriado a cada publicação. Na subida, as migrações rodam de novo e as instituições e os professores de demonstração são cadastrados outra vez.
 4. Para conservar banco, fotos e e-mails entre publicações, anexe um disco em `/var/dados` e defina:
 
