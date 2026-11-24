@@ -6,7 +6,7 @@ Protótipo da disciplina Projeto de Software. A entrega atual é a sprint 2 do L
 
 - Diagrama de implantação em `Diagramas/16-diagrama-de-implantacao.drawio`, com a imagem ao lado.
 - Contêiner Docker da aplicação e o serviço descrito em `render.yaml`.
-- Aplicação no ar: https://moeda-estudantil-ej1s.onrender.com
+- Aplicação no ar: https://moeda-estudantil-cj1s.onrender.com
 - A interface Razor e o backend MVC são o mesmo processo. O nó de execução na nuvem é um único serviço web no Render. A Vercel não executa ASP.NET Core; ela entraria no diagrama se a interface fosse um site estático separado.
 
 ## Aplicação publicada
@@ -15,7 +15,7 @@ O deploy do commit `af707e6` (Sprint 2) concluiu pelo Blueprint `moeda-estudanti
 
 | | |
 | --- | --- |
-| Endereço | https://moeda-estudantil-ej1s.onrender.com |
+| Endereço | https://moeda-estudantil-cj1s.onrender.com |
 | Serviço | `moeda-estudantil` |
 | Gatilho | Blueprint |
 | Commit | `af707e6` |
@@ -71,7 +71,7 @@ A aplicação fica em `http://localhost:8080`. A verificação usada pelo Render
 
 ## Como publicar no Render
 
-O serviço já está publicado em https://moeda-estudantil-ej1s.onrender.com. Um push na `main` dispara outro deploy pelo Blueprint. Para recriar do zero:
+O serviço já está publicado em https://moeda-estudantil-cj1s.onrender.com. Um push na `main` dispara outro deploy pelo Blueprint. Para recriar do zero:
 
 1. Envie este repositório para o GitHub.
 2. No Render, crie um Blueprint apontando para o repositório, branch `main`, arquivo `render.yaml`. O nome usado nesta entrega foi `moeda-estudantil`.
